@@ -1,0 +1,45 @@
+{
+  "name" : "pinecone-facebook-destinations",
+  "version" : "1.0.0",
+  "description" : "RabbitMq facebook subscribers",
+  "main" : "index.js",
+  "scripts" : {
+	"destinations:start:dev" : "nodemon index.js --exec babel-node --presets es2015,stage-2",
+	"destinations:test:e2e" : "babel-node specs/run.js",
+	"destinations:docker:run:dev" : "docker run --detach --name pinecone-facebook-destinations --link pinecone-mongo:mongo --link pinecone-rabbitmq:rabbitmq registry.gitlab.com/reallybigtree/pinecone-facebook-destination",
+	"destinations:docker:build:dev" : "docker build -t registry.gitlab.com/reallybigtree/pinecone-facebook-destinations .",
+	"destinations:docker:push:dev" : "docker push registry.gitlab.com/reallybigtree/pinecone-facebook-destinations"
+  },
+  "author" : {
+	"name" : "Jim Barrows",
+	"email" : "jim@reallybigtree.com"
+  },
+  "contributors" : [
+	{
+	  "name" : "Noah Pinto",
+	  "email" : "noah@reallybigtree.com"
+	}
+  ],
+  "license" : "UNLICENSED",
+  "dependencies" : {
+	"amqplib" : "^0.4.2",
+	"axios" : "^0.13.1",
+	"babel-cli" : "^6.10.1",
+	"babel-core" : "^6.10.4",
+	"babel-preset-es2015" : "^6.9.0",
+	"babel-preset-stage-2" : "^6.11.0",
+	"bluebird" : "^3.4.1",
+	"fb" : "^1.1.1",
+	"moment" : "^2.14.1",
+	"mongoose" : "^4.5.3",
+	"nodemon" : "^1.9.2",
+	"pinecone-models" : "git+ssh://git@gitlab.com/ReallyBigTree/Pinecone-Models.git#develop",
+	"promise.prototype.finally" : "^1.0.1",
+	"querystring" : "^0.2.0"
+  },
+  "devDependencies" : {
+	"jasmine" : "^2.4.1",
+	"minimatch" : "^3.0.2",
+	"webdriverio" : "^4.2.3"
+  }
+}
