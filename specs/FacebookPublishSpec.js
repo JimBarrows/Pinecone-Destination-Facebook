@@ -37,9 +37,9 @@ describe("Facebook posting services", function () {
 							name: "Facebook Test Channel",
 							owner: this.user.id,
 							facebookDestinations: [{
-								name: "Test facebook destination",
+								name: "Test facebook destination 2",
 								pageId: "1752844251638587",
-								accessToken: "EAACEdEose0cBAIySsZA7gEmYuxAnK7AME9vhhS6m5XVAuN13SoF2pWu4Bk2Os3a1kobJRP8207gODZC5ZAWq4UeBZCk0AJng8LzEBHN4H164tohF2rW0GTPh15gwrzs8mseUPUZCewvpZBRsDS5jNHcQmH78KUH799SSF5DRJWpfw4ZB9p2ZCZBZAa"
+								"accessToken": "EAARk3YYZCRlQBANwADvlB0CLjO1lQfZCQDZA7ZCWFqRrfGdWqDBw2nZCVHy0QZBr5oCMGYjcZAoIfNMmZCF0WIuduVUI5Fk2MGQwJrLHmFAQhUplTH46hqPezs2k8HMSfhP7HAxNliYFvj5JkRq8KyJqn606BT87qJFa2XEGfKimQI2GazpARX0r"
 							}]
 						})
 				)
