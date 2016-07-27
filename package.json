@@ -1,14 +1,18 @@
 {
-  "name" : "pinecone-facebook-destinations",
+  "name" : "pinecone-destinations-facebook",
   "version" : "1.0.0",
-  "description" : "RabbitMq facebook subscribers",
+  "description" : "RabbitMq facebook queue listener",
   "main" : "index.js",
+  "bugs" : {
+	"url" : "https://gitlab.com/ReallyBigTree/Pinecone-Destination-Facebook/issues",
+	"email" : "jim@reallybigtree.com"
+  },
   "scripts" : {
-	"destinations:start:dev" : "nodemon index.js --exec babel-node --presets es2015,stage-2",
-	"destinations:test:e2e" : "babel-node specs/run.js",
-	"destinations:docker:run:dev" : "docker run --detach --name pinecone-facebook-destinations --link pinecone-mongo:mongo --link pinecone-rabbitmq:rabbitmq registry.gitlab.com/reallybigtree/pinecone-facebook-destination",
-	"destinations:docker:build:dev" : "docker build -t registry.gitlab.com/reallybigtree/pinecone-facebook-destinations .",
-	"destinations:docker:push:dev" : "docker push registry.gitlab.com/reallybigtree/pinecone-facebook-destinations"
+	"pinecone:destinations:facebook:dev:start" : "nodemon index.js --exec babel-node --presets es2015,stage-2",
+	"pinecone:destinations:facebook:test:e2e" : "babel-node specs/run.js",
+	"pinecone:destinations:facebook:docker:dev:run" : "docker run --detach --name pinecone-destinations-facebook --link pinecone-mongo:mongo --link pinecone-rabbitmq:rabbitmq registry.gitlab.com/reallybigtree/pinecone-destination-facebook",
+	"pinecone:destinations:facebook:docker:build" : "docker build -t registry.gitlab.com/reallybigtree/pinecone-destination-facebook .",
+	"pinecone:destinations:facebook:docker:push" : "docker push registry.gitlab.com/reallybigtree/pinecone-destination-facebook"
   },
   "author" : {
 	"name" : "Jim Barrows",
@@ -21,6 +25,11 @@
 	}
   ],
   "license" : "UNLICENSED",
+  "private" : true,
+  "repository" : {
+	"type" : "git",
+	"url" : "https://gitlab.com/ReallyBigTree/Pinecone-Destination-Facebook/tree/master"
+  },
   "dependencies" : {
 	"amqplib" : "^0.4.2",
 	"axios" : "^0.13.1",
