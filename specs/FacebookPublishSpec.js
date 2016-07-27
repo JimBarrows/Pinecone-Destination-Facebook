@@ -10,6 +10,8 @@ import Content from "pinecone-models/src/Content";
 import moment from "moment";
 import promise from "bluebird";
 
+const queueName = 'facebook';
+
 describe("Facebook posting services", function () {
 
 	let defaultUser = {
@@ -17,15 +19,21 @@ describe("Facebook posting services", function () {
 		password: "ChestyTesty"
 	};
 
+	beforeAll((done) => {
+		Account.remove({})
+				.then(() => Channel.remove({}))
+				.then(() => Content.remove({}))
+				.then(() => done())
+				.catch((error)=> console.log("Error: ", error));
+	});
+
 	beforeEach(function (done) {
 		this.axios = axios.create({
 			baseURL: 'http://localhost:3000/api',
 			timeout: 10000
 		});
-		Account.remove({})
-				.then(() => Channel.remove({}))
-				.then(() => Content.remove({}))
-				.then(() => this.axios.post('/user/register', defaultUser))
+
+		this.axios.post('/user/register', defaultUser)
 				.then((response) => {
 					if (!this.axios.defaults.headers) {
 						this.axios.defaults.headers = {}
@@ -46,7 +54,7 @@ describe("Facebook posting services", function () {
 				.then((newChannel) => {
 					this.channel = newChannel;
 					return Content.create({
-						body: "This is a test body",
+						body: "This is a test body " + moment().toISOString(),
 						channel: this.channel._id,
 						owner: this.user.id,
 						publishDate: moment(),
@@ -64,12 +72,28 @@ describe("Facebook posting services", function () {
 	});
 
 	it("should send content to facebook", function (done) {
-		const queueName         = 'facebook';
+
 		const connectionPromise = amqp.connect('amqp://localhost');
 		const channelPromise    = connectionPromise.then((connection) =>connection.createChannel());
 		promise.join(connectionPromise, channelPromise, (connection, channel) => {
 			channel.sendToQueue(queueName, new Buffer(this.content._id.toString()));
 			return channel.close().finally(() =>connection.close()).finally(()=> done());
 		});
+	});
+
+	it("should schedule content on facebook", function (done) {
+		this.content.publishDate = moment().add(10, "days");
+		Content.update({_id: this.content._id}, this.content)
+				.then((updatedContent) => {
+					console.log("content: ", this.content);
+					const connectionPromise = amqp.connect('amqp://localhost');
+					const channelPromise    = connectionPromise.then((connection) =>connection.createChannel());
+					promise.join(connectionPromise, channelPromise, (connection, channel) => {
+						channel.sendToQueue(queueName, new Buffer(this.content._id.toString()));
+						return channel.close().finally(() =>connection.close()).finally(()=> done());
+					});
+				})
+				.catch((error)=>console.log("Error: ", error));
+
 	})
 });

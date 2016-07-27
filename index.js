@@ -4,7 +4,6 @@
 'use strict';
 import amqp from "amqplib";
 import axios from "axios";
-import {Facebook, FacebookApiException} from "fb";
 import moment from "moment";
 import mongoose from "mongoose";
 import promise from "bluebird";
@@ -40,11 +39,16 @@ promise.join(connection, channel, (con, ch) => {
 											transmissionReport.channel     = channel._id;
 											transmissionReport.destination = destination._id;
 											transmissionReport.status      = 'started';
+											let params                     = {
+												message: content.body,
+												access_token: destination.accessToken,
+											};
+											if (moment().isBefore(content.publishDate)) {
+												params.scheduled_publish_time = Math.floor(content.publishDate.getTime() / 1000);
+												params.published              = false;
+											}
 											axios.post("https://graph.facebook.com/v2.7/" + destination.pageId + "/feed", {}, {
-														params: {
-															message: content.body,
-															access_token: destination.accessToken
-														}
+														params
 													})
 													.then((response) => {
 														transmissionReport.status        = "success";
