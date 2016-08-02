@@ -8,11 +8,13 @@
 	"email" : "jim@reallybigtree.com"
   },
   "scripts" : {
-	"pinecone:destinations:facebook:dev:start" : "nodemon index.js --exec babel-node --presets es2015,stage-2",
-	"pinecone:destinations:facebook:test:e2e" : "babel-node specs/run.js",
-	"pinecone:destinations:facebook:docker:dev:run" : "docker run --detach --name pinecone-destinations-facebook --link pinecone-mongo:mongo --link pinecone-rabbitmq:rabbitmq registry.gitlab.com/reallybigtree/pinecone-destination-facebook",
 	"pinecone:destinations:facebook:docker:build" : "docker build -t registry.gitlab.com/reallybigtree/pinecone-destination-facebook .",
-	"pinecone:destinations:facebook:docker:push" : "docker push registry.gitlab.com/reallybigtree/pinecone-destination-facebook"
+	"pinecone:destinations:facebook:docker:push" : "docker push registry.gitlab.com/reallybigtree/pinecone-destination-facebook",
+	"pinecone:destinations:facebook:docker:run" : "docker run --detach --name pinecone-destinations-facebook --link pinecone-mongo:mongo --link pinecone-rabbitmq:rabbitmq registry.gitlab.com/reallybigtree/pinecone-destination-facebook",
+	"pinecone:destinations:facebook:start" : "nodemon index.js --exec babel-node --presets es2015,stage-2",
+	"pinecone:destinations:facebook:test:e2e" : "babel-node specs/run.js",
+	"prepinecone:destinations:facebook:docker:build" : "npm install;npm prune",
+	"start" : "npm run pinecone:destinations:facebook:start"
   },
   "author" : {
 	"name" : "Jim Barrows",
