@@ -14,7 +14,8 @@
 	"pinecone:destinations:facebook:start" : "nodemon index.js --exec babel-node --presets es2015,stage-2",
 	"pinecone:destinations:facebook:test:e2e" : "babel-node specs/run.js",
 	"prepinecone:destinations:facebook:docker:build" : "npm install;npm prune",
-	"start" : "npm run pinecone:destinations:facebook:start"
+	"start" : "npm run pinecone:destinations:facebook:start",
+	"update:models" : "rm -rf node_modules/pinecone-models; npm install"
   },
   "author" : {
 	"name" : "Jim Barrows",
