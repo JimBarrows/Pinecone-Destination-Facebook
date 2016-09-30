@@ -1,11 +1,9 @@
 stages:
   - build
-  - deploy
 
 build_staging:
   image: docker:git
   stage: build
-  environment: staging
   services:
   - docker:dind
   script:
