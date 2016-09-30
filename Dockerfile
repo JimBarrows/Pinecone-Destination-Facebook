@@ -1,5 +1,6 @@
 FROM node
 
+ARG NPM_TOKEN
 ENV NODE_ENV="production"
 
 RUN mkdir -p /usr/src/app
