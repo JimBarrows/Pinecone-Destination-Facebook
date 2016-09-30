@@ -7,7 +7,6 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 COPY package.json .
-COPY node_modules node_modules
 COPY index.js .
 COPY configurations.js .
 
